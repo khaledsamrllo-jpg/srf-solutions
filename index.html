@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRF-S Solutions | تصميم وبرمجة التطبيقات حسب الطلب وحجز الاستشارات</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #090e17;
+      --secondary: #111827;
+      --card-bg: #1e293b;
+      --accent-cyan: #06b6d4;
+      --accent-blue: #3b82f6;
+      --accent-glow: rgba(6, 182, 212, 0.25);
+      --whatsapp: #22c55e;
+      --facebook: #1877f2;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--primary);
+      color: var(--text-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* تأثيرات ضوئية */
+    body::before {
+      content: "";
+      position: fixed;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(9, 14, 23, 0) 70%);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* الترويسة */
+    header {
+      background: rgba(17, 24, 39, 0.9);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .brand-logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+    .brand-titles {
+      display: flex;
+      flex-direction: column;
+    }
+    .brand-name {
+      font-family: 'Orbitron', 'Cairo', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .brand-name span {
+      color: var(--accent-cyan);
+    }
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .btn-fb {
+      background: var(--facebook);
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+    .btn-fb:hover {
+      background: #0d65d9;
+    }
+
+    /* الواجهة الرئيسية */
+    .hero {
+      max-width: 950px;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.1rem;
+      background: rgba(6, 182, 212, 0.12);
+      border: 1px solid rgba(6, 182, 212, 0.35);
+      color: var(--accent-cyan);
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-size: 2.6rem;
+      font-weight: 900;
+      line-height: 1.35;
+      margin-bottom: 1.25rem;
+      color: #ffffff;
+    }
+    .hero h1 .highlight {
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-cta {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 0.85rem 1.8rem;
+      border-radius: 10px;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1rem;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+      color: #090e17;
+      box-shadow: 0 4px 15px var(--accent-glow);
+    }
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+    .btn-wa {
+      background: var(--whatsapp);
+      color: white;
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
+    .btn-wa:hover {
+      background: #1eb054;
+      transform: translateY(-2px);
+    }
+
+    /* مراحل دراسة وتنفيذ المشروع */
+    .steps-section {
+      max-width: 1100px;
+      margin: 4rem auto 2rem;
+      padding: 0 1.5rem;
+    }
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .section-header h2 {
+      font-size: 2rem;
+      color: #fff;
+      font-weight: 800;
+    }
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      margin-top: 0.3rem;
+    }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5rem;
+    }
+    .step-card {
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      position: relative;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      background: rgba(6, 182, 212, 0.2);
+      color: var(--accent-cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      border: 1px solid var(--accent-cyan);
+    }
+    .step-card h3 {
+      font-size: 1.15rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .step-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* قطاعات وتطبيقات مخصصة */
+    .sectors-section {
+      max-width: 1200px;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+    }
+    .sectors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .sector-card {
+      background: var(--secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: all 0.2s;
+    }
+    .sector-card:hover {
+      border-color: var(--accent-cyan);
+      transform: translateY(-4px);
+    }
+    .sector-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+    .sector-card h3 {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+    .sector-card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+    .sector-features {
+      list-style: none;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+    .sector-features li {
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .sector-features li::before {
+      content: "✔";
+      color: var(--accent-cyan);
+      font-size: 0.75rem;
+    }
+
+    /* قسم حجز الموعد ونموذج الاستشارة */
+    .consultation-section {
+      background: linear-gradient(180deg, var(--secondary) 0%, #0a1120 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 1.5rem;
+    }
+    .booking-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 2.5rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+    .booking-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .form-full {
+      grid-column: span 2;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #e2e8f0;
+    }
+    .form-control {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-control:focus {
+      border-color: var(--accent-cyan);
+    }
+    select.form-control option {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    /* زر واتساب عائم */
+    .wa-float {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      width: 60px;
+      height: 60px;
+      background: var(--whatsapp);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      text-decoration: none;
+      box-shadow: 0 4px 18px rgba(34, 197, 94, 0.45);
+      z-index: 999;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+    }
+
+    /* الفوتر */
+    footer {
+      background: var(--primary);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+    .footer-content {
+      max-width: 650px;
+      margin: 0 auto;
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1.2rem 0;
+      font-weight: 700;
+    }
+    .footer-links a {
+      color: var(--accent-cyan);
+      text-decoration: none;
+    }
+    .copyright {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 768px) {
+      .header-container { flex-direction: column; align-items: flex-start; }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .hero h1 { font-size: 2rem; }
+      .booking-form { grid-template-columns: 1fr; }
+      .form-full { grid-column: span 1; }
+      .booking-wrapper { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط الترويسة -->
+  <header>
+    <div class="header-container">
+      <a href="#" class="brand-logo-wrap">
+        <div class="brand-icon">💻</div>
+        <div class="brand-titles">
+          <div class="brand-name">SRF-S <span>Solutions Digitales</span></div>
+          <div class="brand-sub">تطوير البرمجيات المخصصة وحلول التسيير والذكاء الاصطناعي</div>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="https://www.facebook.com/share/1DcDo2oGAx/" target="_blank" class="btn-fb">
+          <span>صفحتنا على فيسبوك</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- الواجهة الرئيسية -->
+  <section class="hero">
+    <div class="hero-badge">🎯 برمجيات مفصلة خصيصاً لاحتياجك الفعلي</div>
+    <h1>
+      برمجيات وتطبيقات <span class="highlight">حسب طلبك وتصورك الخاص</span><br>
+      للمحلات، العيادات، الإدارات، المدارس والطلبة
+    </h1>
+    <p>
+      لا داعي للتقيد بالبرامج الجاهزة المعقدة والمكلفة. نجلس معك لدراسة مشروعك خطوة بخطوة، نستمع إلى طريقتك في العمل، ونبني لك تطبيقك الخاص بالضبط كما تحب أن يكون.
+    </p>
+    <div class="hero-cta">
+      <a href="#bookingSection" class="btn btn-primary">
+        📅 حجز موعد لدراسة فكرة تطبيقك
+      </a>
+      <a href="https://wa.me/213663933887?text=السلام%20عليكم،%20أرغب%20في%20استشارة%20لتطوير%20برنامج%20خاص%20بي" target="_blank" class="btn btn-wa">
+        💬 واتساب المباشر: 0663933887
+      </a>
+    </div>
+  </section>
+
+  <!-- خطوات دراسة وتصميم التطبيق مع الزبون -->
+  <section class="steps-section">
+    <div class="section-header">
+      <h2>كيف ندرس ونبني تطبيقك الخاص معاً؟</h2>
+      <p>منهجية مبسطة وواضحة تضمن حصولك على البرنامج الذي تحلم به</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>جلسة الاستشارة وتحديد الموعد</h3>
+        <p>نحدد موعداً (حضورياً أو عن بعد) للتعرف على نشاطك وطبيعة العمل اليومي وأهم المشاكل التي تريد حلها برمجياً.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>دراسة المتطلبات ورسم الواجهات</h3>
+        <p>نقوم بتحديد القوائم، الأزرار، والتقارير التي تحب أن تراها في شاشة برنامجك، ونتفق على تفاصيل سير العمل.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>البرمجة والتطوير المخصص</h3>
+        <p>بناء البرنامج سواء كان تطبيق ويب، برنامج حاسوب، أو نظام إكسل أوتوماتيكي ذكي حسب رغبتك وميزانيتك.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">4</div>
+        <h3>التجربة، التدريب والتسليم</h3>
+        <p>تجربة النظام معاً، تدريبك أنت وفريقك على استخدامه بكل سهولة، ومرافقتك بالدعم والتعديل والتطوير المستمر.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- حلولنا المخصصة حسب القطاع -->
+  <section class="sectors-section">
+    <div class="section-header">
+      <h2>نماذج لتطبيقات ننفذها حسب طلبك</h2>
+      <p>نطور لكل قطاع ما يناسبه تماماً</p>
+    </div>
+    <div class="sectors-grid">
+      
+      <!-- المحلات والتجارة -->
+      <div class="sector-card">
+        <div class="sector-icon">🏪</div>
+        <h3>المحلات والأنشطة التجارية</h3>
+        <p>برامج خفيفة لضبط المبيعات، المخزون، وسندات التسليم والفواتير اليومية بدون تعقيد.</p>
+        <ul class="sector-features">
+          <li>إدارة المبيعات والمخزن وحساب الأرباح</li>
+          <li>طباعة فواتير وتوصيل مع قارئ الباركود</li>
+          <li>تنبيه بنقص السلع والديون</li>
+        </ul>
+      </div>
+
+      <!-- العيادات والمراكز الصحية -->
+      <div class="sector-card">
+        <div class="sector-icon">🩺</div>
+        <h3>العيادات والمراكز الطبية</h3>
+        <p>نظام لإدارة مواعيد المرضى، ملفات السوابق الطبية، وتنظيم قاعة الانتظار وسجل الفحوصات.</p>
+        <ul class="sector-features">
+          <li>حجز مواعيد منظم وسجل للمرضى</li>
+          <li>طباعة الوصفات والتقارير الطبية</li>
+          <li>سرية وأمان تام لبيانات المرضى</li>
+        </ul>
+      </div>
+
+      <!-- المدارس ومراكز التكوين -->
+      <div class="sector-card">
+        <div class="sector-icon">🏫</div>
+        <h3>المدارس والمراكز التعليمية</h3>
+        <p>تسيير تسجيلات التلاميذ، الأفواج، جداول التوقيت، متابعة الحضور، واشتراكات الطلاب والأساتذة.</p>
+        <ul class="sector-features">
+          <li>تنظيم الأفواج والاشتراكات الشهرية</li>
+          <li>إشعارات وتنبيهات للغيابات والمدفوعات</li>
+          <li>توليد كشوف النقاط وشهادات التسجيل</li>
+        </ul>
+      </div>
+
+      <!-- الإدارات والمؤسسات -->
+      <div class="sector-card">
+        <div class="sector-icon">🏢</div>
+        <h3>الإدارات والمؤسسات المصغرة</h3>
+        <p>أرشفة إلكترونية للوثائق، متابعة المراسلات، وتسيير مهام الموظفين والعتاد الميداني.</p>
+        <ul class="sector-features">
+          <li>أرشفة وبحث سريع في الوثائق والمراسلات</li>
+          <li>متابعة المهام والمشاريع الميدانية</li>
+          <li>تقارير إحصائية دورية للإدارة</li>
+        </ul>
+      </div>
+
+      <!-- الطلبة والتلاميذ ومشاريع التخرج -->
+      <div class="sector-card">
+        <div class="sector-icon">🎓</div>
+        <h3>الطلبة والتلاميذ ومشاريع التخرج</h3>
+        <p>توجيه واستشارة برمجية لتنفيذ تطبيقات مشاريع التخرج، واجهات الويب، وبرمجة قواعد البيانات.</p>
+        <ul class="sector-features">
+          <li>مساعدة وتأطير في برمجة المشاريع البرمجية</li>
+          <li>تطبيقات ويب وقواعد بيانات للبحوث</li>
+          <li>شرح الأكواد ومنطق البرمجة للتلميذ أو الطالب</li>
+        </ul>
+      </div>
+
+      <!-- أنظمة إكسل وVBA الذكية -->
+      <div class="sector-card">
+        <div class="sector-icon">📊</div>
+        <h3>قوالب وتطبيقات Excel VBA</h3>
+        <p>لمن يفضل العمل على الإكسل؛ نصمم لك جداول بأزرار أوتوماتيكية وبرمجة VBA ذكية تحول ملفك لبرنامج متكامل.</p>
+        <ul class="sector-features">
+          <li>أتمتة العمليات الحسابية وتفادي الأخطاء</li>
+          <li>تصدير سندات ووصولات PDF بنقرة واحدة</li>
+          <li>لوحات تحكم (Dashboard) بيانية واضحة</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- قسم حجز الموعد المباشر والاستشارة -->
+  <section class="consultation-section" id="bookingSection">
+    <div class="section-header">
+      <h2>حدد موعدك لدراسة فكرة برنامجك الآن</h2>
+      <p>املأ البيانات أدناه وسنراجع فكرتك ونتواصل معك لتأكيد موعد الجلسة الاستشارية</p>
+    </div>
+
+    <div class="booking-wrapper">
+      <form class="booking-form" onsubmit="submitAppointment(event)">
+        
+        <div class="form-group">
+          <label>الاسم الكامل</label>
+          <input type="text" id="clientName" class="form-control" placeholder="اسمك الكريم" required>
+        </div>
+
+        <div class="form-group">
+          <label>رقم الهاتف</label>
+          <input type="tel" id="clientPhone" class="form-control" placeholder="06XXXXXXXX" required>
+        </div>
+
+        <div class="form-group">
+          <label>النشاط / الفئة</label>
+          <select id="clientCategory" class="form-control" required>
+            <option value="محل تجاري">محل تجاري / نقطة بيع</option>
+            <option value="عيادة أو مركز طبي">عيادة أو مركز طبي</option>
+            <option value="مدرسة أو مركز تكوين">مدرسة أو مركز تعليمي</option>
+            <option value="إدارة أو شركة">إدارة أو مؤسسة</option>
+            <option value="طالب / تلميذ (مشروع تخرج أو دراسة)">طالب / تلميذ (مشروع تخرج أو فكرة)</option>
+            <option value="أخرى">نشاط أو فكرة أخرى</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>الموعد المفضل للجلسة</label>
+          <input type="date" id="meetingDate" class="form-control" required>
+        </div>
+
+        <div class="form-group form-full">
+          <label>طريقة اللقاء المفضلة</label>
+          <select id="meetingType" class="form-control">
+            <option value="مكالمة هاتفية / واتساب">مكالمة صوتية أو عبر واتساب</option>
+            <option value="جلسة عمل عن بعد (Google Meet / Zoom)">جلسة عمل عن بعد (مشاركة شاشة)</option>
+            <option value="لقاء حضوري مباشر">لقاء حضوري مباشر للمعاينة</option>
+          </select>
+        </div>
+
+        <div class="form-group form-full">
+          <label>كيف تحب أن يكون تطبيقك الخاص؟ (اكتب أهم المميزات التي تحتاجها)</label>
+          <textarea id="appRequirements" class="form-control" rows="4" placeholder="مثلاً: أحتاج تطبيق لتسجيل الزبائن وحساب الأرباح وطباعة الوصل، وأريده أن يعمل على الهاتف والكمبيوتر..." required></textarea>
+        </div>
+
+        <div class="form-full" style="margin-top: 0.5rem;">
+          <button type="submit" class="btn btn-wa" style="width: 100%; justify-content: center; font-size: 1.05rem;">
+            🚀 تأكيد وإرسال الموعد عبر واتساب فوراً
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </section>
+
+  <!-- زر واتساب العائم -->
+  <a href="https://wa.me/213663933887?text=السلام%20عليكم،%20أرغب%20في%20حجز%20موعد%20لدراسة%20تطبيق%20خاص" class="wa-float" title="تواصل مباشر عبر واتساب" target="_blank">
+    💬
+  </a>
+
+  <!-- الفوتر -->
+  <footer>
+    <div class="footer-content">
+      <h3 style="color: #fff; margin-bottom: 0.5rem;">SRF-S Solutions Digitales</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">
+        استشارات، تصميم وتطوير البرمجيات المخصصة، وحلول التسيير والذكاء الاصطناعي.
+      </p>
+      <div class="footer-links">
+        <a href="https://www.facebook.com/share/1DcDo2oGAx/" target="_blank">صفحتنا على فيسبوك</a>
+        <span>•</span>
+        <a href="https://wa.me/213663933887" target="_blank">واتساب: 0663933887</a>
+      </div>
+      <p class="copyright">جميع الحقوق محفوظة © 2026 | SRF-S Solutions</p>
+    </div>
+  </footer>
+
+  <script>
+    const MY_PHONE = "213663933887";
+
+    // معالجة وإرسال نموذج حجز الاستشارة
+    function submitAppointment(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('clientName').value;
+      const phone = document.getElementById('clientPhone').value;
+      const category = document.getElementById('clientCategory').value;
+      const date = document.getElementById('meetingDate').value;
+      const meetingType = document.getElementById('meetingType').value;
+      const requirements = document.getElementById('appRequirements').value;
+
+      // تنسيق رسالة واتساب الاحترافية
+      const message = 
+`*طلب استشارة وحجز موعد لدراسة تطبيق خاص*
+━━━━━━━━━━━━━━━━━━━━
+👤 *الاسم:* ${name}
+📞 *الهاتف:* ${phone}
+🏢 *النشاط:* ${category}
+📅 *الموعد المقترح:* ${date}
+📍 *طريقة اللقاء:* ${meetingType}
+━━━━━━━━━━━━━━━━━━━━
+💡 *تصور الزبون للتطبيق والمميزات المطلوبة:*
+${requirements}`;
+
+      const waURL = `https://wa.me/${MY_PHONE}?text=${encodeURIComponent(message)}`;
+      window.open(waURL, '_blank');
+    }
+  </script>
+</body>
+</html>
